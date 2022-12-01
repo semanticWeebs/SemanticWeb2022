@@ -11,8 +11,12 @@ data_film = pd.read_csv("data_film_preprocesing_data_2.csv")
 
 @app.route("/")
 def home_page():
-
     return render_template("index.html")
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 
 @app.route("/get_films")

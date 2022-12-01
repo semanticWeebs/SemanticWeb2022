@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>SemanticWeb2022</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <style>
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #04AA6D;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+<!DOCTYPE html>
+
+<div class="container">
+    <br>
+    <h1>Wellcome to semanticFilms explorer!</h1>
+    <br>
+    <h5>Use inputs below to search for films.
+        <h5>
+            To read more about the project visit <a href='/about'>about page</a> and <a
+                href='https://github.com/semanticWeebs/SemanticWeb2022'>gitHub repo</a>.
+
+            <form method="GET" action="/get_films" autocomplete="off">
+            <br>
+
+                <div class="form-group" style="width:800px;">
+                    <label>Cinema name:</label>
+                    <input type="string" name="name_cinema" class="form-control">
+                </div>
+                <div class="form-group" style="width:800px;">
+                    <label>Year:</label>
+                    <input type="string" name="data" class="form-control">
+                </div>
+
+                <div class="form-group" class="autocomplete" style="width:800px;">
+                    <label>Country of origin:</label>
+                    <input id="country" type="string" name="country" class="form-control">
+                </div>
+
+                <div class="form-group" style="width:800px;">
+                    <label>Language:</label>
+                    <input type="string" name="lang" class="form-control">
+                </div>
+
+                <div class="form-group" class="autocomplete" style="width:800px;">
+                    <label>Genre:</label>
+                    <input id="genre" type="string" name="ganre" class="form-control">
+                </div>
+
+                <div class="form-group" style="width:800px;">
+                    <label>Year (operation):</label>
+                    <input type="string" name="year op" class="form-control">
+                </div>
+                <br>
+                <button class="button">LookUp</button>
+            </form>
+
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+<!--Autocomplete region start-->
+<script>
+function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+  });
+}
+
+/*An array containing all the country names:*/
+<!--var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];-->
+
+/*An array containing all used country names :*/
+var countries = [' Luxembourg ', ' Thailand', 'United States', 'Australia ', ' Japan ', ' Ireland ', 'Afghanistan ', ' New Zealand ', ' France ', 'Morocco', 'Argentina ', 'Argentina', ' Zimbabwe', 'Norway ', 'Philippines', ' Hong Kong ', 'Switzerland', ' Mexico ', 'Japan', ' Chile ', 'Poland', 'South Africa ', 'Hong Kong', ' Denmark ', ' Malta ', ' Hungary ', 'Bulgaria', ' Romania ', 'South Korea', 'Iceland', 'Jamaica', 'South Africa', ' Spain ', ' Tunisia', 'Bulgaria ', ' Iceland ', ' Serbia', 'Germany ', 'Malaysia', ' Italy ', ' Uruguay', ' Singapore', 'Pakistan ', ' Monaco', 'Sri Lanka', 'Belgium ', ' Belgium ', 'Indonesia', ' Hong Kong', 'Japan ', 'Luxembourg ', 'Israel ', 'Austria ', ' South Korea', 'Colombia ', 'Sweden', ' Switzerland ', ' New Zealand', 'Isle of Man ', 'Egypt', 'Hungary', 'Russia ', 'Fiji ', ' Thailand ', ' Iceland', ' Netherlands ', ' Japan', 'Mozambique ', ' Germany', 'Spain', ' Spain', 'Denmark ', 'Italy ', ' Sweden', 'Pakistan', ' Mexico', ' Russia ', ' Kazakhstan ', ' Greece ', ' Finland ', ' South Korea ', 'Singapore', 'Finland', 'Spain ', ' Vietnam', 'Norway', 'Turkey', 'Nigeria', 'Greece', ' Norway', 'Israel', 'Switzerland ', 'Botswana ', 'Australia', 'Mexico ', 'India ', ' Peru ', ' Puerto Rico ', ' Poland', ' India ', ' United States', 'Romania ', 'Philippines ', ' Italy', 'Malaysia ', 'Sudan ', ' Netherlands', ' Iran', ' United Kingdom ', 'Cambodia ', ' Brazil ', ' South Africa ', 'Cameroon ', 'Poland ', ' United Kingdom', 'Cuba ', 'Estonia', ' Bhutan', 'Colombia', ' Hungary', 'Czech Republic ', 'United Kingdom ', ' Czech Republic', ' Morocco ', ' India', ' Rwanda', 'Taiwan', 'Hungary ', 'Ireland', 'France', 'New Zealand', 'Singapore ', 'Portugal', 'Hong Kong ', ' Mongolia', 'Puerto Rico', 'Finland ', ' Greece', 'Algeria ', ' Poland ', 'Iran', 'Brazil ', ' France', 'Austria', 'China ', 'Romania', 'Denmark', ' Canada ', 'Ireland ', ' Norway ', ' North Korea ', 'Canada ', ' Taiwan', ' Turkey ', ' Portugal ', 'India', ' Russia', ' Brazil', 'Thailand', 'Cuba', ' Israel', 'Russia', 'Czech Republic', 'Italy', 'Chile ', 'Germany', ' Canada', ' Sweden ', ' Germany ', ' Singapore ', ' South Africa', 'Albania', 'China', 'Belgium', ' Switzerland', ' Slovakia', 'Lebanon', 'Canada', 'Serbia', 'Netherlands', 'Aruba ', 'Netherlands ', 'New Zealand ', ' Romania', ' China ', 'United Kingdom', 'Brazil', ' Mali', 'Mexico', 'France ', 'Iceland ']
+
+/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+autocomplete(document.getElementById("country"), countries);
+
+/*An array containing all used genres :*/
+var genres = ['Historical drama', ' Sword and Sandal', ' Spy ', 'Parody', ' French New Wave ', 'Spaghetti Western', ' sports', ' Surrealism', 'Anti-war ', ' Cult ', ' Mockumentary', ' Biographical', 'Slasher', ' Social commentary', ' Western ', 'Action ', ' Parody ', ' Wuxia', 'Historical drama ', 'Cyberpunk ', 'Black-and-white', ' Religious Film ', 'Spy', ' Computer animation', ' Cult', 'Mystery ', ' Humour', ' Biography ', 'Epic', ' Steampunk', ' Family', ' Cyberpunk ', 'Indie ', ' Psycho-biddy', ' Mockumentary ', ' Zombie', 'Martial arts ', ' Humour ', 'Adventure', 'Family ', ' Costume drama ', 'Anime ', 'Animation ', ' Screwball comedy ', 'Fantasy', ' Science fiction', ' Romance Film ', ' Spy', ' Short film ', ' Dystopia ', 'Adult', ' Cinema of France ', 'Zombie', ' Romance', 'Biographical', 'Parody ', 'Epic ', 'Teen', 'Biographical ', 'Coming of age', ' Black comedy ', ' Suspense', 'Horror Film', ' Romance ', 'Thriller', 'Science fiction ', 'sports', 'Musical', ' Biographical ', " Children's", 'Western', ' Anime ', 'Drama', 'Coming of age ', ' Horror Film', ' Silent film ', ' Psycho-biddy ', ' Silent film', 'Mockumentary ', 'Heist film', 'Horror Film ', ' Indie ', 'Action-Adventure', ' Neo-noir ', ' Black-and-white ', 'Romance Film', 'Disaster', ' Road movie ', ' Plague ', ' Exploitation', 'Adventure ', ' Screwball comedy', ' Mystery ', ' Adventure', ' Space opera ', ' Musical Comedy', 'Comedy', 'Romance Film ', 'Documentary ', ' Slasher', 'Black-and-white ', ' Superhero', 'Biography ', ' Martial arts ', ' Short film', ' Teen', ' Indie', ' Post apocalypse', ' Thriller ', "Children's", ' Film noir', ' Erotica', ' Fantasy ', ' Crime ', ' Animation ', 'Bollywood ', 'Teen ', ' Drama ', 'Fantasy ', 'Drama ', ' War', ' Romantic comedy', ' Musical ', ' Documentary ', 'Family Drama', 'Steampunk', 'Cult ', ' Martial arts', 'Romantic comedy ', ' Drama', ' Family Drama', ' Space opera', ' Horror Film ', 'Satire', ' Teen ', "Children's ", 'Costume drama ', 'Stop motion', ' Erotic Science Fiction ', 'Opera', ' Erotica ', ' Family Drama ', 'Crime ', 'Pornographic movie', 'Boxing', 'Comedy ', ' Pornographic movie', ' Fantasy', ' Romance Film', 'Action', 'Slasher ', 'Indie', 'Erotica ', ' Period piece', ' Neo-noir', ' Epic ', 'Black comedy', ' Satire', ' Coming of age', ' Film noir ', ' French New Wave', ' Superhero ', 'Romantic comedy', ' Coming of age ', ' Anime', 'Martial arts', 'Anime', 'Erotica', 'Action/Adventure ', 'Family Drama ', ' Crime', ' Documentary', 'Black comedy ', ' Historical drama ', ' Comedy ', ' Parody', ' Slasher ', 'Mockumentary', 'Wuxia', 'Disaster ', ' Family ', ' Thriller', 'War', ' Disaster ', 'Comedy-drama', 'Documentary', 'Crime Thriller', ' Musical', ' Adventure ', 'Superhero', 'Romantic drama', ' Romantic comedy ', 'Musical ', 'Spy ', 'Mystery', 'Film noir ', 'Science fiction', 'Satire ', 'Film noir', ' Epic', ' Satire ', 'Bollywood', ' Stop motion', 'Crime', " Children's ", 'Short film', ' Mystery', 'Conspiracy theory ', ' Supermarionation', 'Thriller ', ' Science fiction ', 'Family', ' Western', 'Spaghetti Western ', ' Boxing ', ' Southern Gothic', ' Historical drama', ' Comedy', ' Black-and-white']
+/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+autocomplete(document.getElementById("genre"), genres);
+
+
+
+
+</script>
+<!--Autocomplete region end-->
+</body>
+</html>
