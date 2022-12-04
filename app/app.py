@@ -6,7 +6,7 @@ from utils import subset
 
 app = Flask(__name__)
 
-data_film = pd.read_csv("data_film_preprocesing_data_2.csv")
+data_film = pd.read_csv("./data/data_film_preprocesing_data_2.csv")
 
 
 @app.route("/")
@@ -67,5 +67,5 @@ def films():
         return data.to_html()
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0")
