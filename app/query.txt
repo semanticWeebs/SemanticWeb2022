@@ -1,0 +1,32 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix dbp: <http://dbpedia.org/property/>
+prefix lmdb: <https://triplydb.com/Triply/linkedmdb/vocab/>
+prefix film_subject: <https://triplydb.com/Triply/linkedmdb/id/film_subject/>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select  distinct ?name_film 
+?data   
+(group_concat( distinct ?actor   ;separator=' | ') as   ?actor  ) 
+(group_concat( distinct ?genre   ;separator=' | ') as   ?genre  ) 
+(group_concat( distinct ?country   ;separator=' | ') as ?country ) 
+where 
+{
+  ?film rdf:type lmdb:Film ;
+        rdfs:label ?name_film;
+        lmdb:genre/rdfs:label ?genre;
+        lmdb:actor/lmdb:actor_name ?actor;
+        dct:date ?data;
+        lmdb:country/rdfs:label ?country.          
+} 
+
+
+
+#lmdb:genre
+#lmdb:actor
+#lmdb:rating
+#lmdb:writer
+#dct:title
+#dct:date
+#lmdb:country
+#rdf:type
