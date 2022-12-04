@@ -34,6 +34,7 @@ def films():
     ganre = request.args.get("ganre", default="").split("|")
 
     actor = request.args.get("actror", default="").split("|")
+    produser = request.args.get("produser", default="").split("|")
 
     ganre = [i.strip() for i in ganre]
     if len(ganre[0]) == 0:
@@ -42,11 +43,14 @@ def films():
     actor = [i.strip() for i in actor]
     if len(actor[0]) == 0:
         actor = ""
+    produser = [i.strip() for i in produser]
+    if len(produser[0]) == 0:
+        produser = ""
+
     if len(lang) == 0:
         lang = ""
     if len(country) == 0:
         country = ""
-    print(page, year, country, lang, actor)
 
     global data_film
     data = subset(
@@ -55,7 +59,7 @@ def films():
         year_op=year_op,
         lang=lang,
         actor=actor,
-        produser="",
+        produser=produser,
         country=country,
         genre=ganre,
         data=data_film,
