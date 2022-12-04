@@ -19,7 +19,7 @@
     <a href="https://github.com/semanticWeebs/SemanticWeb2022"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/semanticWeebs/SemanticWeb2022">View Demo</a>
+    <a href="https://semantic-films-explorer.herokuapp.com/">View Demo</a>
     ·
     <a href="https://github.com/semanticWeebs/SemanticWeb2022/issues">Report Bug</a>
     ·
