@@ -7,6 +7,7 @@ from utils import subset
 app = Flask(__name__)
 
 data_film = pd.read_csv("./data/data_film_preprocesing_data_2.csv")
+data_film.drop(["Unnamed: 0", "Unnamed: 0.1"], inplace=True, axis=1)
 
 
 @app.route("/")
@@ -33,8 +34,9 @@ def films():
     lang = request.args.get("lang", default="").split()
     ganre = request.args.get("ganre", default="").split("|")
 
-    actor = request.args.get("actror", default="").split("|")
-    produser = request.args.get("produser", default="").split("|")
+    actor = request.args.get("actor", default="").split("|")
+    produser = request.args.get("producer", default="").split("|")
+    print(lang, actor)
 
     ganre = [i.strip() for i in ganre]
     if len(ganre[0]) == 0:
@@ -53,23 +55,28 @@ def films():
         country = ""
 
     global data_film
-    data = subset(
-        name_film=page,
-        year=year,
-        year_op=year_op,
-        lang=lang,
-        actor=actor,
-        produser=produser,
-        country=country,
-        genre=ganre,
-        data=data_film,
-    )
+    try:
+        data = subset(
+            name_film=page,
+            year=year,
+            year_op=year_op,
+            lang=lang,
+            actor=actor,
+            produser=produser,
+            country=country,
+            genre=ganre,
+            data=data_film,
+        )
+    except:
+
+        data = data_film[data_film["year"] < 1000]
 
     try:
         return data[:100].to_html()
     except:
+
         return data.to_html()
 
 
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0")
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
