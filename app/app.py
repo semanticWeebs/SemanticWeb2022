@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,send_from_directory
 from flask import jsonify
 from flask import request
 import pandas as pd
+import os
 from utils import subset
 
 app = Flask(__name__)
@@ -13,6 +14,11 @@ data_film = pd.read_csv("./data/data_film_preprocesing_data_2.csv")
 def home_page():
     return render_template("index.html")
 
+@app.route('/favicon.ico')
+def favicon():
+    print("test")
+    return send_from_directory(os.path.join(app.root_path, 'images'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route("/about")
 def about():
@@ -71,5 +77,5 @@ def films():
         return data.to_html()
 
 
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0")
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")
