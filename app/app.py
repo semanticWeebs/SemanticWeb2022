@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 data_film = pd.read_csv("./data/data_film_preprocesing_data_2.csv")
 data_film.drop(["Unnamed: 0", "Unnamed: 0.1"], inplace=True, axis=1)
+data_empty = data_film[data_film["data"] < 1000]
+
 
 
 @app.route("/")
@@ -74,12 +76,12 @@ def films():
         )
     except:
 
-        data = data_film[data_film["year"] < 1000]
+        return data_empty.to_html()
+        # data_empty = data = data_film[data_film["data"] < 1000]
 
     try:
         return data[:100].to_html()
     except:
-
         return data.to_html()
 
 
