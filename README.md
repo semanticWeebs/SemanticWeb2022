@@ -169,6 +169,7 @@ Project Link: [https://github.com/semanticWeebs/SemanticWeb2022](https://github.
 
 [product-screenshot]: app/images/FilmExplorerCapture.gif
 
+
 [SparQL]: https://img.shields.io/badge/-SparQL-yellow
 [SparQL-url]: https://www.w3.org/TR/rdf-sparql-query/
 
