@@ -8,7 +8,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/semanticWeebs/SemanticWeb2022">
-    <img src="images/semLogo.png" alt="Logo" width="80" height="80">
+    <img src="app/images/semLogo.png" alt="Logo">
   </a>
 
   <h3 align="center">semanticFilms explorer</h3>
@@ -149,8 +149,7 @@ Project Link: [https://github.com/semanticWeebs/SemanticWeb2022](https://github.
 -  [@Danylo](https://github.com/danyaobertan) Project management, frontend development, project analysis.
 -  [@Andrey](https://github.com/Andrey0277) Backend development, theme researchment and analysis.
 -  [@Taras](https://github.com/Gavair) Dockerizing & deployment, gitOps, and project analysis.
--  [@Yura](https://github.com/Not-aProblem) Testing, preparing a report.
--  [@Dmytro](https://github.com/unlugir) Testing, preparing a report.
+-  [@Yura](https://github.com/Not-aProblem) Manual testing, code optimization and preparing reports.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -168,7 +167,7 @@ Project Link: [https://github.com/semanticWeebs/SemanticWeb2022](https://github.
 [license-shield]: https://img.shields.io/badge/-license-yellow
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: app/images/FilmExplorerCapture.gif
 
 [SparQL]: https://img.shields.io/badge/-SparQL-yellow
 [SparQL-url]: https://www.w3.org/TR/rdf-sparql-query/
