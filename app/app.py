@@ -1,4 +1,4 @@
-from flask import Flask, render_template,send_from_directory
+from flask import Flask, render_template, send_from_directory
 from flask import jsonify
 from flask import request
 import pandas as pd
@@ -12,15 +12,19 @@ data_film.drop(["Unnamed: 0", "Unnamed: 0.1"], inplace=True, axis=1)
 data_empty = data_film[data_film["data"] < 1000]
 
 
-
 @app.route("/")
 def home_page():
     return render_template("index.html")
 
-@app.route('/favicon.ico')
+
+@app.route("/favicon.ico")
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'images'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(
+        os.path.join(app.root_path, "images"),
+        "favicon.ico",
+        mimetype="image/vnd.microsoft.icon",
+    )
+
 
 @app.route("/about")
 def about():
